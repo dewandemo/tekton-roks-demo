@@ -1,0 +1,50 @@
+apiVersion: tekton.dev/v1alpha1
+kind: ClusterTask
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"tekton.dev/v1alpha1","kind":"ClusterTask","metadata":{"annotations":{},"name":"build-docker-image-from-git-source"},"spec":{"inputs":{"params":[{"default":"/workspace/docker-source/Dockerfile","description":"The
+      path to the dockerfile to
+      build","name":"pathToDockerFile","type":"string"},{"default":"/workspace/docker-source","description":"The
+      build context used by Kaniko
+      (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)","name":"pathToContext","type":"string"}],"resources":[{"name":"git-source","type":"git"}]},"outputs":{"resources":[{"name":"builtImage","type":"image"}]},"steps":[{"args":["--dockerfile=$(inputs.params.pathToDockerFile)","--destination=$(outputs.resources.builtImage.url)","--context=$(inputs.params.pathToContext)"],"command":["/kaniko/executor"],"env":[{"name":"DOCKER_CONFIG","value":"/tekton/home/.docker/"}],"image":"gcr.io/kaniko-project/executor:v0.15.0","name":"build-and-push"}]}}
+  creationTimestamp: '2020-05-20T17:15:47Z'
+  generation: 2
+  name: build-docker-image-from-git-source
+  resourceVersion: '359891'
+  selfLink: /apis/tekton.dev/v1alpha1/clustertasks/build-docker-image-from-git-source
+  uid: 411f47f3-1677-4b78-b6aa-6d225aa9e973
+spec:
+  params:
+    - default: /workspace/docker-source/Dockerfile
+      description: The path to the dockerfile to build
+      name: pathToDockerFile
+      type: string
+    - default: /workspace/docker-source
+      description: >-
+        The build context used by Kaniko
+        (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)
+      name: pathToContext
+      type: string
+  resources:
+    inputs:
+      - name: git-source
+        type: git
+    outputs:
+      - name: builtImage
+        type: image
+  steps:
+    - args:
+        - '--dockerfile=$(inputs.params.pathToDockerFile)'
+        - '--destination=$(outputs.resources.builtImage.url)'
+        - '--context=$(inputs.params.pathToContext)'
+      command:
+        - /kaniko/executor
+        - '--storage-driver=vfs'
+      env:
+        - name: DOCKER_CONFIG
+          value: /tekton/home/.docker/
+      image: 'gcr.io/kaniko-project/executor:v0.15.0'
+      name: build-and-push
+      resources: {}
+

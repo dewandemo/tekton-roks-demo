@@ -1,0 +1,147 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  creationTimestamp: '2020-05-20T21:04:54Z'
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: kabanero-website3
+    pipeline.openshift.io/strategy: docker
+    pipeline.openshift.io/type: kubernetes
+    tekton.dev/pipeline: kabanero-website3-buildah-deployment
+  name: kabanero-website3-buildah-deployment-aok5ij
+  namespace: tekton-roks-console
+  resourceVersion: '397077'
+  selfLink: >-
+    /apis/tekton.dev/v1alpha1/namespaces/tekton-roks-console/pipelineruns/kabanero-website3-buildah-deployment-aok5ij
+  uid: 1913c866-8157-4d3c-a34d-7db49d260240
+spec:
+  params:
+    - name: APP_NAME
+      value: kabanero-website3
+    - name: IBM_CLOUD_API_KEY
+      value: wIrj4L8nwwd551ze5bjzESO-XTpIsmxX3kxKUfneRetE
+    - name: IBM_CLOUD_ORGANIZATION
+      value: dewan.ishtiaque@hotmail.com
+    - name: IBM_CLOUD_SPACE
+      value: dev
+  pipelineRef:
+    name: kabanero-website3-buildah-deployment
+  resources:
+    - name: app-source
+      resourceRef:
+        name: git-rr55v2
+    - name: app-image
+      resourceRef:
+        name: image-17igxx
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+status:
+  completionTime: '2020-05-20T21:11:42Z'
+  conditions:
+    - lastTransitionTime: '2020-05-20T21:11:42Z'
+      message: 'Tasks Completed: 2, Skipped: 0'
+      reason: Succeeded
+      status: 'True'
+      type: Succeeded
+  startTime: '2020-05-20T21:04:54Z'
+  taskRuns:
+    kabanero-website3-buildah-deployment-aok5ij-build-2pr5w:
+      pipelineTaskName: build
+      status:
+        completionTime: '2020-05-20T21:11:32Z'
+        conditions:
+          - lastTransitionTime: '2020-05-20T21:11:32Z'
+            message: All Steps have completed executing
+            reason: Succeeded
+            status: 'True'
+            type: Succeeded
+        podName: kabanero-website3-buildah-deployment-aok5ij-build-2pr5w-p-plcdp
+        resourcesResult:
+          - key: commit
+            resourceRef:
+              name: git-rr55v2
+            value: 3f48786ebc922d4944049b8880fa0dab625a9064
+        startTime: '2020-05-20T21:04:54Z'
+        steps:
+          - container: step-build
+            imageID: >-
+              registry.redhat.io/rhel8/buildah@sha256:26850a7f70de7641f6bb03abbb77a3130798b612b17733005327ccfe97170274
+            name: build
+            terminated:
+              containerID: >-
+                cri-o://391fd6789963b064af41b93ad41836c90c4088535e206ca71503ac1264e32e42
+              exitCode: 0
+              finishedAt: '2020-05-20T21:11:09Z'
+              reason: Completed
+              startedAt: '2020-05-20T21:05:08Z'
+          - container: step-push
+            imageID: >-
+              registry.redhat.io/rhel8/buildah@sha256:26850a7f70de7641f6bb03abbb77a3130798b612b17733005327ccfe97170274
+            name: push
+            terminated:
+              containerID: >-
+                cri-o://8f1417f155d130fcddf30539f72cc51d91544642cb7cfade644ee5e605706be2
+              exitCode: 0
+              finishedAt: '2020-05-20T21:11:31Z'
+              reason: Completed
+              startedAt: '2020-05-20T21:11:09Z'
+          - container: step-git-source-git-rr55v2-nhd97
+            imageID: >-
+              registry.redhat.io/openshift-pipelines-tech-preview/pipelines-git-init-rhel8@sha256:bb744988e87cc556873098885ee1a7fc1ef7b6c1ea24e3a4d7a5e518edb22838
+            name: git-source-git-rr55v2-nhd97
+            terminated:
+              containerID: >-
+                cri-o://7393378b6888545b85f8362297c1af053a2b4e833bb087543fe74c7fd8495427
+              exitCode: 0
+              finishedAt: '2020-05-20T21:05:08Z'
+              message: >-
+                [{"key":"commit","value":"3f48786ebc922d4944049b8880fa0dab625a9064","resourceRef":{"name":"git-rr55v2"}}]
+              reason: Completed
+              startedAt: '2020-05-20T21:05:07Z'
+          - container: step-image-digest-exporter-5vrs4
+            imageID: >-
+              registry.redhat.io/openshift-pipelines-tech-preview/pipelines-imagedigestexporter-rhel8@sha256:77f27990bbc1bdc7fb1fe0bb997c7c1f715e43aa4ba361521b20466614a714f9
+            name: image-digest-exporter-5vrs4
+            terminated:
+              containerID: >-
+                cri-o://6bf1eceaaeb75c05f8d9b5a2262955f2cbdc0a44f194e69ba52149b34de915fd
+              exitCode: 0
+              finishedAt: '2020-05-20T21:11:32Z'
+              reason: Completed
+              startedAt: '2020-05-20T21:11:32Z'
+          - container: step-create-dir-image-dpfs6
+            imageID: >-
+              registry.access.redhat.com/ubi8/ubi-minimal@sha256:326c94ab44d1472a30d47c49c2f896df687184830fc66a66de00c416885125b0
+            name: create-dir-image-dpfs6
+            terminated:
+              containerID: >-
+                cri-o://be73dd676b15fb4ab78f1199d0254c9edd2cf78992e5068942403a5be41bca72
+              exitCode: 0
+              finishedAt: '2020-05-20T21:05:06Z'
+              reason: Completed
+              startedAt: '2020-05-20T21:05:06Z'
+    kabanero-website3-buildah-deployment-aok5ij-deploy-j85rg:
+      pipelineTaskName: deploy
+      status:
+        completionTime: '2020-05-20T21:11:42Z'
+        conditions:
+          - lastTransitionTime: '2020-05-20T21:11:42Z'
+            message: All Steps have completed executing
+            reason: Succeeded
+            status: 'True'
+            type: Succeeded
+        podName: kabanero-website3-buildah-deployment-aok5ij-deploy-j85rg--vwg5d
+        startTime: '2020-05-20T21:11:33Z'
+        steps:
+          - container: step-oc
+            imageID: >-
+              image-registry.openshift-image-registry.svc:5000/openshift/cli@sha256:0a70026a8b193e61356054ab92ec825aac23c52ac5410c5e49c2412f92fe195b
+            name: oc
+            terminated:
+              containerID: >-
+                cri-o://39aa1c6218fbda5d8d641e1e2352726c0a8e1d9b23989c4fd8456f4b769ebc65
+              exitCode: 0
+              finishedAt: '2020-05-20T21:11:42Z'
+              reason: Completed
+              startedAt: '2020-05-20T21:11:41Z'
+
