@@ -18,13 +18,13 @@ spec:
     - default: kabanero-website3
       name: APP_NAME
       type: string
-    - default: wIrj4L8nwwd551ze5bjzESO-XTpIsmxX3kxKUfneRetE
+    - default: INSERT_YOUR_IBM_CLOUD_API_KEY_HERE
       name: IBM_CLOUD_API_KEY
       type: string
-    - default: dewan.ishtiaque@hotmail.com
+    - default: INSERT_YOUR_IBM_CLOUD_ORGANIZATION_HERE
       name: IBM_CLOUD_ORGANIZATION
       type: string
-    - default: dev
+    - default: INSERT_YOUR_IBM_CLOUD_SPACE_HERE
       name: IBM_CLOUD_SPACE
       type: string
   resources:
