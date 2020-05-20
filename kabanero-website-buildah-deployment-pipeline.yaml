@@ -1,0 +1,63 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  creationTimestamp: '2020-05-20T18:20:58Z'
+  generation: 2
+  labels:
+    app.kubernetes.io/instance: kabanero-website3
+    pipeline.openshift.io/strategy: docker
+    pipeline.openshift.io/type: kubernetes
+  name: kabanero-website3-buildah-deployment
+  namespace: tekton-roks-console
+  resourceVersion: '393344'
+  selfLink: >-
+    /apis/tekton.dev/v1alpha1/namespaces/tekton-roks-console/pipelines/kabanero-website3-buildah-deployment
+  uid: 2d4fb434-9102-4922-9009-09a612144e9e
+spec:
+  params:
+    - default: kabanero-website3
+      name: APP_NAME
+      type: string
+    - default: wIrj4L8nwwd551ze5bjzESO-XTpIsmxX3kxKUfneRetE
+      name: IBM_CLOUD_API_KEY
+      type: string
+    - default: dewan.ishtiaque@hotmail.com
+      name: IBM_CLOUD_ORGANIZATION
+      type: string
+    - default: dev
+      name: IBM_CLOUD_SPACE
+      type: string
+  resources:
+    - name: app-source
+      type: git
+    - name: app-image
+      type: image
+  tasks:
+    - name: build
+      params:
+        - name: TLSVERIFY
+          value: 'false'
+      resources:
+        inputs:
+          - name: source
+            resource: app-source
+        outputs:
+          - name: image
+            resource: app-image
+      taskRef:
+        kind: ClusterTask
+        name: buildah
+    - name: deploy
+      params:
+        - name: SCRIPT
+          value: kubectl $@
+        - name: ARGS
+          value:
+            - rollout
+            - status
+            - deploy/$(params.APP_NAME)
+      runAfter:
+        - build
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
